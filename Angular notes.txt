@@ -1,0 +1,112 @@
+                                                    ANGULAR
+
+Start a project:- ng new Project name
+                    cd into the project 
+        run server:- ng serve
+
+Installing a new package:-
+    All the packages are installed locally into the project ang not globally on device
+    Installed package is visible in package.json file.
+    This package can be used to overwrite some defaults settings of angular app in agular.json file
+        The required module of the package can be added from nome_modules folder
+
+Working of Angular:
+    We first start with the index.html file. This is the html file which is displayed in the browser.
+    When this page is loaded, a file named main.ts is executed with it.
+    In main.ts, there is a "bootstrapModule" which passes the imported "AppModule" as an argument.
+    In 'app.module.ts' file, 'AppComponent' is passed in the 'bootstrap' array which tells angular to include all the 'app.component' files in the project.
+    Angular now can read all the 'app.component' files.
+    'app.component.ts' file contains a decorator '@Component' under which there is a variable named 'selector'.
+    The specified 'selector acts as an html tag under which all the content in the 'app.component.html' file is included in the 'index.html' file.
+
+Creating a Component:
+    To create a component for a specific app, inside the app folder, create a folder with the name same as the component name.
+    Create a file inside the folder named as 'componentName.component.ts'.
+    Now, inside this file, first we need to import the 'Component' element so that js compiler should know what the '@Component' means.
+    To include the 'Component', type the following in the ts file:
+        import { Component } from '@angular/core';
+    Then declare the '@Component' decorator and add its deatils as follows:
+        @Component({
+            selector: 'app-name',
+            templateUrl: './name.component.html'        //For this, there must be a name.component.html file in the component folder which contains the content of the component.
+        })
+    Then we need to enter the following statement:
+        export class NameComponent { }            
+    
+    Creating component with CLI:-
+        ng generate component ComponentName           or               ng g c ComponentName
+        This will create a new component in the app folder with all the required files.
+        Also this component will automatically be added in app.module.ts file.
+        use ng g c ComponentName --skipTest -> to supress test file
+
+Use inline template:
+    To use inline template in .ts file instead of templateUrl use template and write your html code in between quotes(' ').
+    To write multi line code instead of ' use backtics(` `) to wrap your code.
+
+    We can use same for style.
+        The only difference with this is it takes input in form of an array.
+
+Different ways of using selectors:
+    By default, when we mention the selector's name in quotes in the component.ts file, we use the selector as an element in the template file.
+    There are more ways to use a selector.
+        Use selector as a class:
+            Inside the quotes of the selector variable, use '.selectorName' to use the selector as a class same as in css.
+        Use selector as an attribute:
+            Wrap the name of the selector with square brackets ( [] ) to use the selector as an attribute of any html tag.
+
+Databinding:
+    Communication between Transcript file and template file.
+    Can be done in multiple ways:
+        Output data:
+            String Interpolation
+            Property Binding
+        React to event:
+            Event Binding
+        Combination of both the above:
+            Two-Way-Binding
+
+String Interpolation:
+    Define a variable in .ts file in export class.
+    Call that variable in .html file using {{ VarName }}.
+    This always returns string, if thw variable defined is not a string the it will be first comverted into string and then returned.
+
+Propety Binding:
+    syntax: [disabled] = "functionName"
+    This method can be used to bind html attribute with some function in .ts file.
+    This property comes in play when we want to change the value of some attribute during runtime.
+    For eg- We used property binding to enable the button after 2 sec of reloading the page.
+
+Event Binding:
+    This property is used to execute a piece of code or a method when some event occurs. eg: click
+    This property can be used by adding an event inside parenthesis and equating it with a method or a piece of code.
+    eg. (click) = "methodName"
+
+Two-Way-Binding:
+    syntax: [(ngModel)] = "VarName"
+    To use ngModel, FormsModule from @angular/forms needs to be added in imports array in AppModule.
+    It will change the value of the html element with the two way data binding to the varName as well as it can change the value of varName to whatever user defines it in the html element.
+
+Directives:
+    Structural Directive:
+        *ngIf - This returns either true or false.
+            * is required because ngIf a structural directive which either adds or removes elements from the DOM.
+        *ngIf with else -
+            <p *ngIf="true/false; else localVarName"> Message </p>
+                    <ng-template #localVarName>         // # is used for local referal
+                        Message
+                    </ng-template>
+                    Here ng-template tag is used as a substitute element which will be present in the DOM if else condition is true.
+        *ngFor = "let varName of listName"
+    
+    Attribute Derivative:
+        They do not add or remove elements from the DOM, they just change the element they are placed upon.
+        ngStyle - 
+            The property is just ngStyle, we enclose it in [] to use property binding.
+            [ngStyle] = "{propertyName: 'value'}"
+            We can also pass in some method in value to dynamically change the style.
+        ngClass -
+            This property allow us to dynamically add or remove css class from an element.
+            It is too used with enclosing in [].
+            [ngClass] = "{className : 'condition'}"
+
+// i = index ->  This is reserverd for indexing
