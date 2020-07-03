@@ -110,3 +110,10 @@ Directives:
             [ngClass] = "{className : 'condition'}"
 
 // i = index ->  This is reserverd for indexing
+
+Defining Models 
+    Models are added in a file created in component's folder.
+    componentName.model.ts
+        export class ModelName{
+            public name: string;                //public keyword is added to make it accessible publically
+        }
