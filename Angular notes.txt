@@ -117,3 +117,78 @@ Defining Models
         export class ModelName{
             public name: string;                //public keyword is added to make it accessible publically
         }
+
+Property Binding on Elements of Components
+    import { Input } from '@angular/core' in components.ts file.
+    To the component you want to be shared with the Parent component add @Input decorator.
+    eg. @Input() propertyName = ""
+    We can also add alias name to the property that we are sharing, so that other components can use the alias name of the property and not the property name.
+        To do so we do @Input('aliasName') propertyName = ""
+
+Catching an event from other components:
+    To catch an event from other components and to fetch data along with it, Do the following:
+        Create emitable event property (emitable object).
+        Example:
+            @Output() propName = new EventEmitter<{data: datatype}>();          // here EventEmitter is an object which emits the data inside the <{}> to other components where these EventEmitter objects are used as event binding
+            To use EventEmitter and Output, both must be imported from '@angular/core'.     // @Output is a decorator which is used to send the data of the property from this component to another component
+        To emit the property out of the component, use the following:
+            this.propName.emit({data: dataValue});
+        Now, to catch the emitted data, the EventEmitter objects can be used as the event listner via event binding with the selector for the component which has the EventEmitter objects.
+        To do so, do the following:
+            <selectorName (propName)="funcName($event)"></selectorName>
+            Here, propName is the EventEmitter object emitted from the other component, funcName is the function which fetches the values emitted by those objects.
+    Alias for the EventEmitter can be used in the same way as in @Input decorator, for the @Output decorator.
+
+Encapsulation:
+    Each component is assigned with a specific attribute due to which css applied to one component wont affect other components.
+    But we can change this behavior by adding the following in @Component:
+        encapsulation: ViewEncapsulation.None 
+
+Local Reference:
+    Holds reference to the whole html element.
+    It is denoted with hastag ('#') sign.
+    The local referencecan be used anywhere in the html file but not in typescript file.
+
+Accessing Template using @ViewChild:
+    Another method to fetch the value of any html element is by using a local reference and @ViewChild.
+    @ViewChild is a decorator placed before a property in a typescript file to convert the property to the type ElementRef.
+    To convert a property to type ElementRef, do the following:
+        Place a local reference on a html element.
+        In the typescript file, create a property as follows:
+            @ViewChild('localRefVarName') propertyName: ElementRef;
+        Here ViewChild and ElementRef needs to be imported from '@angular/core'.
+    Now, to get ElementRef object's value, use the following:
+        propertyName.nativeElement.value
+
+Projecting content into Component using ng-content:
+    By default if we place anything between the opening and closing tags of the component, it will be ignored by angular.
+    But if we want to display the content at a specific position in template, we can simply add <ng-content></ng-content>.
+    Now the data will be displayed at the place where ng-content tag is placed.
+
+Component Lifecycle:
+    There are several phases or so called activities in a component, from its initiation to any changes made in it.
+    These phases are refered to as several so called functions which run on their own when a specific phase, for example: any changes made in a component, is reached.
+    If a user want to perform certain activity at a perticular phase, he can include lines of code in those functions which are executed in those phases.
+    There are several types of Functions which are executed on several phases.
+    These functions can be stated inside the component class.
+    The functions and their instant of execution are defined below:
+        ngOnChanges(changes: SimpleChanges): called after a bound input property changes. This is the only Lifecycle function that recives an argument as mensioned with the functionName.
+        ngOnInit(): called once the component is initialized. Is executed after the constructor.
+        ngDoCheck(): called during every change detection run.
+        ngAfterContentInit(): called after content has been projected into the view via ng-content.
+        ngAfterContentChecked(): called every time the project content has been checked.
+        ngAfterViewInit(): called after the component's view and child views have been initialized.
+        ngAfterViewChecked(): called every time the view and child views have been checked.
+        ngOnDestroy(): called when an element is removed from the DOM.
+    These Lifecycle components need to be imported from '@angular/core'.
+    If you want, you can specify in the defination of the class that which Lifecycle component is defined for the component. 
+        For example:
+            export class compNameComponent implements OnInit, OnChanges {}      //here OnInit and OnChanges is specified after the keyword 'implements'
+    Notes on working of these functions:
+        ngOnChanges executes before ngOnInit.
+        If we console.log the SimpleChanges argument of ngOnChanges, we will see a SimpleChanges object which has the information regarding the past changes or the current version of change made to the component.
+
+Getting access to ng-content using @ContentChild:
+    We can access the html elements, between the selector tags of a component, from the typescript file using @ContentChild.
+    It is used in the same way as @ViewChild, setting a local reference, passing the localReference as the argument of @ContentChild decorator and accessing the element in the form of ElementRef object.
+    @ContentChild needs to be imported form '@angular/core'.
