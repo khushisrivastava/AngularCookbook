@@ -275,3 +275,30 @@ ngSwitch:
         ngSwitch then matches the value with all the values stated in the ngSwitchCase.
         Whichever value matches, That element stays in the DOM, rest are removed.
         If no value matches, ngSwitchDefault stays in the DOM, rest are removed.
+
+Services:
+    When working on a big code where we have to repeat a piece of code multiple times, we can just use a service and call that over and over again.
+    Creating a service:
+        Create a file serviceName.service.ts
+        Now create an export class ServiceName{}
+        Inside the export class you can write the method you want to use.
+        // Note: We need not to add a decorator for creating services.
+    Using a service:
+        Import the service you want to use in .ts file.
+        In @Component add:
+            providers: [ServiceName]
+        In export class add a constructor:
+            constructor(private varName: ServiceName) {}
+            Now you can use the service by calling varName
+
+        To use a parent instance of a service in a component:
+            Simply remove the service from the providers array.
+            Now a new instance for the service wont be created, the component will be using the parent instance of the service.
+            The import and constructor do needs to include the service, just providers doesn't need it.
+
+    Providing Service inside a Service:
+        This can only be done if we provide a service at AppModule level.
+        Import the service(which we want to inject) in the service(where we want to inject) file.
+        Add @Injectable() decorator before the export class to tell angular that this service is injectable and we are using another service inside it.
+        Import Injectable from @angular/core.
+        Now use the methods of injected services the way we use in other components. 
